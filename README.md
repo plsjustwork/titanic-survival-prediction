@@ -112,6 +112,6 @@ titanic-survival-prediction/
 
 ## 📌 Notes
 
--Random Forest cross-validation score is printed at the end of the script.
--The /outputs folder ensures all visualizations are saved and not overwritten in case you're running the code on local and didn't install the /outputs folder.
--Feel free to modify train_test_split or Random Forest hyperparameters for experimentation.
+- Random Forest cross-validation score is printed at the end of the script.
+- The /outputs folder ensures all visualizations are saved and not overwritten in case you're running the code on local and didn't install the /outputs folder.
+- Feel free to modify train_test_split or Random Forest hyperparameters for experimentation.
