@@ -60,9 +60,9 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 
 Example outputs:
  - Accuracy: 0.81
+ - Classification reports are printed in the console
  - Confusion Matrix (Logistic Regression):
 ![Confusion Matrix - Logistic Regression](outputs/confusion_lr.png)
- - Classification reports are printed in the console
 
 ---
 
