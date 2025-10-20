@@ -108,7 +108,7 @@ titanic-survival-prediction/
 3.Run the script using the bash:
   python titanic_survival.py
 
-📌 Notes
+## 📌 Notes
 
 Random Forest cross-validation score is printed at the end of the script.
 The /outputs folder ensures all visualizations are saved and not overwritten in case you're running the code on local and didn't install the /outputs folder.
