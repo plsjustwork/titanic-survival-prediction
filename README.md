@@ -99,8 +99,8 @@ Top 3 negative features:
 Logistic Regression highlights that being female, paying a higher fare, and traveling in first class increased survival chances, while age and traveling in larger families decreased it. Random Forest confirms these insights and shows which features are most important for predictions.
 
 ## 📂 File Structure
-
-  ``` titanic-survival/
+```
+  titanic-survival/
   │
   ├── train.csv # Original Titanic dataset
   ├── titanic_survival.py # Python script with preprocessing, modeling, and evaluation
