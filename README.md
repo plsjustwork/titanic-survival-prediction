@@ -59,6 +59,7 @@ Example outputs:
  - Confusion Matrix:
     [[89 16]
     [19 55]]
+   
  -Classification Report:
   | Class | Precision | Recall | F1-Score | Support |
   |-------|-----------|--------|----------|---------|
