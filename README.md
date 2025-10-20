@@ -100,12 +100,12 @@ Logistic Regression highlights that being female, paying a higher fare, and trav
 
 ## 📂 File Structure
 
-  titanic-survival/
+  '''titanic-survival/
   │
   ├── train.csv # Original Titanic dataset
   ├── titanic_survival.py # Python script with preprocessing, modeling, and evaluation
   ├── rf_feature_importance.png
-  └── README.md
+  └── README.md'''
 ---
 
 ## 💻 How to Run
