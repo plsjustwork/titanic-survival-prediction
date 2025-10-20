@@ -62,6 +62,7 @@ Example outputs:
  - Accuracy: 0.81
  - Classification reports are printed in the console
  - Confusion Matrix (Logistic Regression):
+
 ![Confusion Matrix - Logistic Regression](outputs/confusion_lr.png)
 
 ---
