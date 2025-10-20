@@ -60,7 +60,7 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 
 Example outputs:
  - Accuracy: 0.81
- - Confusion Matrix (Logistic Regression): saved as `outputs/confusion_lr.png`
+ - Confusion Matrix (Logistic Regression): saved as (outputs/confusion_lr.png)
  - Classification reports are printed in the console
 
 ---
@@ -74,7 +74,7 @@ Example outputs:
 
 ### Random Forest Feature Importance
 
-`outputs/rf_feature_importance.png`
+![Random Forest Feature Importances](outputs/rf_feature_importance.png)
 
 - Shows the most and least influential features
 
