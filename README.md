@@ -10,13 +10,15 @@ This project predicts passenger survival on the Titanic using **Logistic Regress
 The goal is to build a predictive model to determine which passengers survived the Titanic disaster based on passenger features.  
 This project demonstrates:
 
-- Data cleaning and preprocessing
+- Data loading, exploration, and cleaning
 - Handling missing values
 - Encoding categorical variables
-- Feature scaling
+- Feature scaling for Logistic Regression
 - Model training and evaluation
+- Visualizing confusion matrices and feature importances
 - Comparing model outputs and feature importance
-
+- Cross-validation for Random Forest
+  
 ---
 
 ## 🗂 Dataset
@@ -41,11 +43,13 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Used to analyze the impact of each feature on survival
 - Positive coefficients indicate features increasing survival chances
 - Negative coefficients indicate features decreasing survival chances
+- Produces a confusion matrix visualization
 
 ### Random Forest Classifier
 - Provides feature importance to understand which features influence predictions the most
 - Does not require feature scaling
-
+- Includes cross-validation for robustness
+  
 ---
 
 ## 📈 Evaluation Metrics
@@ -55,19 +59,11 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - **Classification Report**: precision, recall, f1-score
 
 Example outputs:
- - Accuracy: 0.80
- - Confusion Matrix:
-    [[89 16]
-    [19 55]]
-   
- -Classification Report:
-  | Class | Precision | Recall | F1-Score | Support |
-  |-------|-----------|--------|----------|---------|
-  | 0     | 0.82      | 0.85   | 0.84     | 105     |
-  | 1     | 0.78      | 0.74   | 0.76     | 74      |
-  | **Accuracy** |       |        | **0.80** | 179     |
-  | **Macro Avg** | 0.80 | 0.79   | 0.80     | 179     |
-  | **Weighted Avg** | 0.80 | 0.80 | 0.80     | 179     |
+ - Accuracy: 0.81
+ - Classification reports are printed in the console
+ - Confusion Matrix (Logistic Regression):
+
+![Confusion Matrix - Logistic Regression](outputs/confusion_lr.png)
 
 ---
 
@@ -75,23 +71,14 @@ Example outputs:
 
 ### Logistic Regression Coefficients
 - Positive: increase survival chance  
-- Negative: decrease survival chance  
-
-Top 3 positive features:
-- Sex (female)  
-- Fare  
-- Passenger Class (Pclass = 1)
-
-Top 3 negative features:
-- Pclass (3rd class)  
-- Age  
-- SibSp
+- Negative: decrease survival chance 
+- Top positive and negative features are printed in the console.
 
 ### Random Forest Feature Importance
 
-![Random Forest Feature Importance](rf_feature_importance.png)
+![Random Forest Feature Importances](outputs/rf_feature_importance.png)
 
-- The figure shows the most and least influential features in descending order
+- Shows the most and least influential features
 
 ---
 
@@ -100,12 +87,14 @@ Logistic Regression highlights that being female, paying a higher fare, and trav
 
 ## 📂 File Structure
 ```
-  titanic-survival/
-  │
-  ├── train.csv # Original Titanic dataset
-  ├── titanic_survival.py # Python script with preprocessing, modeling, and evaluation
-  ├── rf_feature_importance.png
-  └── README.md 
+titanic-survival-prediction/
+│
+├── train.csv                    # Original Titanic dataset
+├── titanic_survival.py          # Python script with preprocessing, modeling, and evaluation
+├── outputs/                     # Generated outputs
+│   ├── confusion_lr.png         # Logistic Regression confusion matrix
+│   └── rf_feature_importance.png # Random Forest feature importance plot
+└── README.md
 ```
 ---
 
@@ -120,3 +109,9 @@ Logistic Regression highlights that being female, paying a higher fare, and trav
 
 3.Run the script using the bash:
   python titanic_survival.py
+
+## 📌 Notes
+
+- Random Forest cross-validation score is printed at the end of the script.
+- The /outputs folder ensures all visualizations are saved and not overwritten in case you're running the code on local and didn't install the /outputs folder.
+- Feel free to modify train_test_split or Random Forest hyperparameters for experimentation.
