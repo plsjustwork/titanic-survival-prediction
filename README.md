@@ -1,12 +1,27 @@
 # Titanic Survival Prediction
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![CV](https://img.shields.io/badge/CV-0.845-blue.svg)
-[![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)]()  <!-- TODO: delete line if no CI yet -->
+[![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)](https://github.com/plsjustwork/titanic-survival-prediction/actions)
 
-This project predicts passenger survival on the Titanic using **Logistic Regression** and **Random Forest Classifier**, showcasing data preprocessing, model evaluation, and feature importance visualization.
+Predict passenger survival with classical ML (Logistic Regression, Random-Forest, XGBoost) in a **fully-reproducible** pipeline powered by GitHub Actions, showcasing data preprocessing, model evaluation, and feature importance visualization.
 
 ---
+```bash
+# 1. clone & enter
+git clone https://github.com/plsjustwork/titanic-survival-prediction.git
+cd titanic-survival-prediction
 
+# 2. create environment
+python -m venv .venv && source .venv/bin/activate  # Win: .venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. reproduce the entire pipeline
+dvc repro                 # pulls data, trains, evaluates, writes outputs/
+
+# 4. (optional) run tests & linting
+pytest
+flake8
+```
 ## 📊 Project Overview
 
 The goal is to build a predictive model to determine which passengers survived the Titanic disaster based on passenger features.  
