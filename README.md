@@ -17,7 +17,7 @@ Updates from previous version include:
 - Cross-validation for Random Forest
 - SHAP summary plots for feature importance
 - Validation curves for Random Forest depth
-- Comparison of LR coefficients vs RF importanc
+- Comparison of LR coefficients vs RF importance
   
 ---
 
@@ -32,39 +32,53 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Dropped irrelevant columns: `Name`, `Ticket`, `Cabin`, `PassengerId`
 - Filled missing `Age` values with the median
 - Filled missing `Embarked` values with the mode (`S`)
-- Encoded `Sex` (male = 0, female = 1) and used one-hot encoding for `Embarked`
-- Scaled features for Logistic Regression
+- Standardized features for Logistic Regression
+- Outliers removed based on IQR method
 
 ---
 
 ## 🧠 Models Used
 
 ### Logistic Regression
-- Used to analyze the impact of each feature on survival
-- Positive coefficients indicate features increasing survival chances
-- Negative coefficients indicate features decreasing survival chances
-- Produces a confusion matrix visualization
+
+- Tuned with 5-fold GridSearchCV for C and penalty
+- Standardized features
+- Outputs:
+  - Accuracy (validation & test)
+  - Confusion matrix (outputs/cm_lr_testset.html)
+  - Top positive and negative coefficients
 
 ### Random Forest Classifier
-- Provides feature importance to understand which features influence predictions the most
-- Does not require feature scaling
-- Includes cross-validation for robustness
+
+- Hyperparameter tuning via GridSearchCV
+- Validation curve for max_depth (outputs/val_curve_depth.png)
+- Cross-validation score on train fold
+- Outputs:
+  - Accuracy (validation & test)
+  - Confusion matrix (outputs/cm_rf_testset.html)
+  - Feature importance (outputs/rf_feature_importance.png)
+  
+---
+
+## 🔍 SHAP Explainability
+
+- TreeExplainer on Random Forest
+- SHAP summary plot saved as outputs/shap_beeswarm.png
+- Shows feature-level impact on predictions
   
 ---
 
 ## 📈 Evaluation Metrics
 
-- **Accuracy**: measures overall model correctness
-- **Confusion Matrix**: shows true positives, false positives, true negatives, false negatives
-- **Classification Report**: precision, recall, f1-score
-
+- Accuracy: overall model performance
+- Classification Report: precision, recall, f1-score
+- Confusion Matrix: true positives, false positives, etc.
+- Cross-Validation Score: for Random Forest
 Example outputs:
- - Accuracy: 0.81
- - Classification reports are printed in the console
- - Confusion Matrix (Logistic Regression):
-
-![Confusion Matrix - Logistic Regression](outputs/confusion_lr.png)
-
+  -Random Forest CV Accuracy: 0.845
+  -Confusion matrices saved in outputs/
+  -Comparison of LR coefficients vs RF importances printed in console
+  
 ---
 
 ## 🔍 Feature Importance
@@ -83,7 +97,10 @@ Example outputs:
 ---
 
 ## 📝 Conclusion
-Logistic Regression highlights that being female, paying a higher fare, and traveling in first class increased survival chances, while age and traveling in larger families decreased it. Random Forest confirms these insights and shows which features are most important for predictions.
+- Logistic Regression confirms that being female, traveling in first class, and higher fare increase survival chance
+- Age, larger families, and being male reduce survival chance
+- Random Forest and SHAP plots provide consistent feature importance insights
+- Outlier removal and hyperparameter tuning improved model performance
 
 ## 📂 File Structure
 ```
@@ -117,6 +134,6 @@ flake8
 ```
 ## 📌 Notes
 
-- Random Forest cross-validation score is printed at the end of the script.
-- The /outputs folder ensures all visualizations are saved and not overwritten in case you're running the code on local and didn't install the /outputs folder.
-- Feel free to modify train_test_split or Random Forest hyperparameters for experimentation.
+- The outputs/ folder ensures all plots and metrics are saved automatically
+- Removing outliers is optional; can experiment with different thresholds
+- Feel free to tweak train/test split, hyperparameters, or add additional models
