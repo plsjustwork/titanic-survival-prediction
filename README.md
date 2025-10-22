@@ -103,7 +103,7 @@ titanic-survival-prediction/
 ├── .github/
 │   ├── workflows/
 │   │    ├── ci.yml
-├── .tests/
+├── tests/
 │   ├── __pycache__
 │   │    ├── test_preprocessing.cpython-312-pytest-8.4.2.pyc
 │   └── test_preprocessing.py
@@ -136,13 +136,10 @@ cd titanic-survival-prediction
 python -m venv .venv && source .venv/bin/activate  # Win: .venv\Scripts\activate
 pip install -r requirements.txt
 
-# 3. reproduce the entire pipeline
-dvc repro                 # pulls data, trains, evaluates, writes outputs/
+# 3.Run the script using the bash:
+python titanic.py
 
-# 4.Run the script using the bash:
-  python titanic_survival.py
-
-# 5. (optional) run tests & linting
+# 4. (optional) run tests & linting
 pytest
 flake8
 ```
