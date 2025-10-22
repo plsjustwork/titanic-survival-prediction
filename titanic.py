@@ -1,20 +1,21 @@
 # ================= Titanic Survival Prediction=================
 
+import os
+
+import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-import os
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
+                             classification_report, confusion_matrix)
+from sklearn.model_selection import cross_val_score, train_test_split
 from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import (
-    accuracy_score,
-    confusion_matrix,
-    classification_report,
-    ConfusionMatrixDisplay,
-)
 
+RANDOM_STATE = 42
+np.random.seed(RANDOM_STATE)
 # ------------------------ 1️⃣ Load & Explore Data ------------------------
 
 
@@ -35,11 +36,13 @@ def preprocess_data(data):
     """Clean and encode Titanic data."""
     data = data.drop(["Name", "Ticket", "Cabin"], axis=1)
 
+    # Handle missing values using SimpleImputer
+    num_imputer = SimpleImputer(strategy="median")
+    cat_imputer = SimpleImputer(strategy="most_frequent")
+
     # Handle missing values
-    data["Age"] = data["Age"].fillna(data["Age"].median())
-    data["Embarked"] = data["Embarked"].fillna(
-        data["Embarked"].mode()[0]
-    )  # most common: 'S'
+    data["Age"] = num_imputer.fit_transform(data[["Age"]])
+    data["Embarked"] = cat_imputer.fit_transform(data[["Embarked"]]).ravel()
 
     # Encode categorical variables
     data["Sex"] = data["Sex"].map({"male": 0, "female": 1})
@@ -52,14 +55,17 @@ def preprocess_data(data):
 
 
 # ------------------------ 5️⃣ Logistic Regression ------------------------
-def train_logistic_regression(X_train, y_train, X_test, y_test):
+def train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test):
     """Train and evaluate Logistic Regression."""
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
+    X_val_scaled = scaler.transform(X_val)
     X_test_scaled = scaler.transform(X_test)
 
     lr = LogisticRegression(max_iter=500, solver="liblinear")
     lr.fit(X_train_scaled, y_train)
+    print(f"Validation accuracy (Logistic): {lr.score(X_val_scaled, y_val):.3f}")
+    print(f"Hold-out test accuracy (Logistic): {lr.score(X_test_scaled, y_test):.3f}")
     y_pred = lr.predict(X_test_scaled)
 
     print("=== Logistic Regression Evaluation ===")
@@ -84,10 +90,15 @@ def train_logistic_regression(X_train, y_train, X_test, y_test):
 
 
 # ------------------------ 6️⃣ Random Forest ------------------------
-def train_random_forest(X_train, y_train, X_test, y_test):
+def train_random_forest(X_train, y_train, X_val, X_test, y_val, y_test):
     """Train and evaluate Random Forest."""
-    rf = RandomForestClassifier(n_estimators=200, max_depth=6, random_state=42)
+    rf = RandomForestClassifier(
+        n_estimators=200, max_depth=6, random_state=RANDOM_STATE
+    )
     rf.fit(X_train, y_train)  # Trees do not need scaling
+    print(f"Validation accuracy (RF): {rf.score(X_val, y_val):.3f}")
+    print(f"Hold-out test accuracy (RF): {rf.score(X_test, y_test):.3f}")
+
     y_pred = rf.predict(X_test)
 
     print("\n=== Random Forest ===")
@@ -102,7 +113,12 @@ def train_random_forest(X_train, y_train, X_test, y_test):
     # Plot Random Forest Feature Importances
     plt.figure(figsize=(8, 6))
     sns.barplot(
-        x="Importance", y="Feature", data=feature_importances, palette="viridis"
+        x="Importance",
+        y="Feature",
+        data=feature_importances,
+        hue="Feature",
+        palette="viridis",
+        legend=False,
     )
     plt.title("Random Forest Feature Importances")
     plt.savefig("outputs/rf_feature_importance.png", bbox_inches="tight")
@@ -114,11 +130,35 @@ def main():
     data = load_data()
     explore_data(data)
     X, y = preprocess_data(data)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
+    # ---- Optional: Remove outliers (based on numeric columns) ----
+    num_cols = X.select_dtypes(include=["number"]).columns
+    Q1 = X[num_cols].quantile(0.25)
+    Q3 = X[num_cols].quantile(0.75)
+    IQR = Q3 - Q1
+
+    X_no_outliers = X[
+        ~((X[num_cols] < (Q1 - 1.5 * IQR)) | (X[num_cols] > (Q3 + 1.5 * IQR))).any(
+            axis=1
+        )
+    ]
+    y_no_outliers = y.loc[X_no_outliers.index]
+
+    print(f"Shape before removing outliers: {X.shape}")
+    print(f"Shape after removing outliers: {X_no_outliers.shape}")
+
+    # Replace X, y with filtered data
+    X, y = X_no_outliers, y_no_outliers
+
+    X_temp, X_test, y_temp, y_test = train_test_split(
+        X, y, test_size=0.15, random_state=RANDOM_STATE, stratify=y
     )
-    lr, coef = train_logistic_regression(X_train, y_train, X_test, y_test)
-    rf, feat_imp = train_random_forest(X_train, y_train, X_test, y_test)
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_temp, y_temp, test_size=0.176, random_state=RANDOM_STATE, stratify=y_temp
+    )
+    # 0.85*0.176 ≈ 0.15  → final split 70 / 15 / 15
+
+    lr, coef = train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test)
+    rf, feat_imp = train_random_forest(X_train, y_train, X_val, X_test, y_val, y_test)
 
     # ------------------------ 7️⃣ Compare LR Coefficients vs RF Importances ------------------------
     comparison = pd.DataFrame(
@@ -129,10 +169,8 @@ def main():
     print("\n=== Comparison: Logistic Regression vs Random Forest ===")
     print(comparison.round(3))
 
-    print(
-        "\nCross-Validation Accuracy (RF):",
-        round(cross_val_score(rf, X, y, cv=5).mean(), 3),
-    )
+    cv_score = cross_val_score(rf, X_train, y_train, cv=5).mean()
+    print(f"Cross-Validation Accuracy (RF, train fold): {cv_score:.3f}")
 
 
 if __name__ == "__main__":
