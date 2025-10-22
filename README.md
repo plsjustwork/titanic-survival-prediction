@@ -47,23 +47,31 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
   - Validation accuracy: 0.851
   - Test accuracy: 0.770
   - Confusion matrix:
+    
     ![Logistic Regression Confusion Matrix](outputs/cm_lr_testset.png)
+    
   - Top positive coefficients: Sex (0.970), Fare (0.303)
   - Top negative coefficients: Pclass (-0.143), Embarked_S (-0.089)
 
 ### Random Forest Classifier
 
 - Hyperparameter tuning via GridSearchCV
-- Validation curve for max_depth 
+- Validation curve for max_depth
+ 
 ![Random Forest Validation Curve](outputs/val_curve_depth.png)
+
 - Cross-validation score on training fold: 0.814
 - Outputs:
   - Validation accuracy: 0.851
   - Test accuracy: 0.793
-  - Confusion matrix 
+  - Confusion matrix
+     
   ![Random Forest Confusion Matrix](outputs/cm_rf_testset.png)
-  - Feature importance 
+  
+  - Feature importance
+     
   ![Random Forest Feature Importances](outputs/rf_feature_importance.png)
+  
   - Most important features: Sex, Fare, Age
   
 ---
@@ -72,7 +80,9 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 
 - TreeExplainer on Random Forest
 - SHAP summary plot:
+  
 ![Random Forest SHAP Beeswarm](outputs/shap_beeswarm.png)
+
 - Shows feature-level impact on predictions
 - Confirms Sex and Fare as top contributors to survival prediction
   
