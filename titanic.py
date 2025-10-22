@@ -136,11 +136,9 @@ def main():
     Q3 = X[num_cols].quantile(0.75)
     IQR = Q3 - Q1
 
-    X_no_outliers = X[
-        ~((X[num_cols] < (Q1 - 1.5 * IQR)) | (X[num_cols] > (Q3 + 1.5 * IQR))).any(
-            axis=1
-        )
-    ]
+    outlier_condition = ((X[num_cols] < (Q1 - 1.5 * IQR)) |
+                     (X[num_cols] > (Q3 + 1.5 * IQR))).any(axis=1)
+    X_no_outliers = X[~outlier_condition]
     y_no_outliers = y.loc[X_no_outliers.index]
 
     print(f"Shape before removing outliers: {X.shape}")
@@ -150,10 +148,18 @@ def main():
     X, y = X_no_outliers, y_no_outliers
 
     X_temp, X_test, y_temp, y_test = train_test_split(
-        X, y, test_size=0.15, random_state=RANDOM_STATE, stratify=y
+        X,
+        y,
+        test_size=0.15, 
+        random_state=RANDOM_STATE, 
+        stratify=y
     )
     X_train, X_val, y_train, y_val = train_test_split(
-        X_temp, y_temp, test_size=0.176, random_state=RANDOM_STATE, stratify=y_temp
+        X_temp,
+        y_temp,
+        test_size=0.176,
+        random_state=RANDOM_STATE,
+        stratify=y_temp
     )
     # 0.85*0.176 ≈ 0.15  → final split 70 / 15 / 15
 
