@@ -75,9 +75,9 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Confusion Matrix: true positives, false positives, etc.
 - Cross-Validation Score: for Random Forest
 Example outputs:
-  -Random Forest CV Accuracy: 0.845
-  -Confusion matrices saved in outputs/
-  -Comparison of LR coefficients vs RF importances printed in console
+  - Random Forest CV Accuracy: 0.845
+  - Confusion matrices saved in outputs/
+  - Comparison of LR coefficients vs RF importances printed in console
   
 ---
 
