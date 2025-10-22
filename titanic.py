@@ -172,7 +172,7 @@ def main():
             "LR Coefficients": lr.coef_[0],
             "RF Importances": rf.feature_importances_,
         },
-        index=X_train.columns
+        index=X_train.columns,
     ).sort_values(by="RF Importances", ascending=False)
 
 
@@ -185,5 +185,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 # ========================== End of Project ==========================
