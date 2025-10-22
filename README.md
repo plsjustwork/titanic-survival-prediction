@@ -46,10 +46,7 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Outputs:
   - Validation accuracy: 0.851
   - Test accuracy: 0.770
-  - Confusion matrix:
-    
-    ![Logistic Regression Confusion Matrix](outputs/cm_lr_testset.png)
-    
+  - Confusion matrix:Viewable through console
   - Top positive coefficients: Sex (0.970), Fare (0.303)
   - Top negative coefficients: Pclass (-0.143), Embarked_S (-0.089)
 
@@ -64,10 +61,7 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Outputs:
   - Validation accuracy: 0.851
   - Test accuracy: 0.793
-  - Confusion matrix
-     
-  ![Random Forest Confusion Matrix](outputs/cm_rf_testset.png)
-  
+  - Confusion matrix:Viewable through console
   - Feature importance
      
   ![Random Forest Feature Importances](outputs/rf_feature_importance.png)
