@@ -97,11 +97,30 @@ Logistic Regression highlights that being female, paying a higher fare, and trav
 ```
 titanic-survival-prediction/
 │
+├── .dvc/
+│   ├── .gitignore
+│   └── config
+├── .github/
+│   ├── workflows/
+│   │    ├── ci.yml
+├── .tests/
+│   ├── __pycache__
+│   │    ├── test_preprocessing.cpython-312-pytest-8.4.2.pyc
+│   └── test_preprocessing.py
+├── outputs/                     # Generated outputs
+│   ├── confusion_lr.png
+│   ├── rf_feature_importance.png 
+│   ├── shap_beeswarm.png
+│   ├── val_curve_depth.png
+│   ├── cm_lr_testset.html
+│   └── cm_rf_testset.html
+├── .dvcignore
+├── .gitignore
+├── requirements.txt
+├── setup.cfg
+├── test.csv
 ├── train.csv                    # Original Titanic dataset
 ├── titanic_survival.py          # Python script with preprocessing, modeling, and evaluation
-├── outputs/                     # Generated outputs
-│   ├── confusion_lr.png         # Logistic Regression confusion matrix
-│   └── rf_feature_importance.png # Random Forest feature importance plot
 └── README.md
 ```
 ---
@@ -120,10 +139,10 @@ pip install -r requirements.txt
 # 3. reproduce the entire pipeline
 dvc repro                 # pulls data, trains, evaluates, writes outputs/
 
-4.Run the script using the bash:
+# 4.Run the script using the bash:
   python titanic_survival.py
 
-# 4. (optional) run tests & linting
+# 5. (optional) run tests & linting
 pytest
 flake8
 ```
