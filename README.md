@@ -2,6 +2,7 @@
 ![Python](https://img.shields.io/badge/python-3.12-blue)
 ![CV](https://img.shields.io/badge/CV-0.845-blue.svg)
 [![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)](https://github.com/plsjustwork/titanic-survival-prediction/actions)
+![DVC](https://img.shields.io/badge/DVC-2.40+-blue)
 
 Predict passenger survival with classical ML (Logistic Regression, Random-Forest) in a fully-reproducible pipeline powered by GitHub Actions. Includes data preprocessing, model evaluation, hyperparameter tuning, cross-validation, feature importance, and SHAP explainability. All outputs are saved automatically in `outputs/`.
 
