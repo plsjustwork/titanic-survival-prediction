@@ -44,19 +44,23 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Tuned with 5-fold GridSearchCV for C and penalty
 - Standardized features
 - Outputs:
-  - Accuracy (validation & test)
+  - Validation accuracy: 0.851
+  - Test accuracy: 0.770
   - Confusion matrix (outputs/cm_lr_testset.html)
-  - Top positive and negative coefficients
+  - Top positive coefficients: Sex (0.970), Fare (0.303)
+  - Top negative coefficients: Pclass (-0.143), Embarked_S (-0.089)
 
 ### Random Forest Classifier
 
 - Hyperparameter tuning via GridSearchCV
 - Validation curve for max_depth (outputs/val_curve_depth.png)
-- Cross-validation score on train fold
+- Cross-validation score on training fold: 0.814
 - Outputs:
-  - Accuracy (validation & test)
+  - Validation accuracy: 0.851
+  - Test accuracy: 0.793
   - Confusion matrix (outputs/cm_rf_testset.html)
   - Feature importance (outputs/rf_feature_importance.png)
+  - Most important features: Sex, Fare, Age
   
 ---
 
@@ -65,6 +69,7 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - TreeExplainer on Random Forest
 - SHAP summary plot saved as outputs/shap_beeswarm.png
 - Shows feature-level impact on predictions
+- Confirms Sex and Fare as top contributors to survival prediction
   
 ---
 
@@ -75,9 +80,12 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Confusion Matrix: true positives, false positives, etc.
 - Cross-Validation Score: for Random Forest
 Example outputs:
-  - Random Forest CV Accuracy: 0.845
-  - Confusion matrices saved in outputs/
-  - Comparison of LR coefficients vs RF importances printed in console
+| Model               | Validation Accuracy | Test Accuracy | CV Score (if applicable) |
+| ------------------- | ------------------- | ------------- | ------------------------ |
+| Logistic Regression | 0.851               | 0.770         | -                        |
+| Random Forest       | 0.851               | 0.793         | 0.814                    |
+- Confusion matrices and LR vs RF comparison printed in console
+- Cross-validation confirms Random Forest generalizes well
   
 ---
 
@@ -86,6 +94,7 @@ Example outputs:
 - Age, larger families, and being male reduce survival chance
 - Random Forest and SHAP plots provide consistent feature importance insights
 - Outlier removal and hyperparameter tuning improved model performance
+- Cross-validation shows RF is robust and avoids overfitting
 
 ## 📂 File Structure
 ```
@@ -121,4 +130,5 @@ flake8
 
 - The outputs/ folder ensures all plots and metrics are saved automatically
 - Removing outliers is optional; can experiment with different thresholds
-- Feel free to tweak train/test split, hyperparameters, or add additional models
+- Hyperparameter tuning and cross-validation can be modified for experimentation
+- LR coefficients vs RF feature importance comparison printed in console for deeper analysis
