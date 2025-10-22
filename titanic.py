@@ -15,6 +15,7 @@ from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
 from sklearn.model_selection import (GridSearchCV, cross_val_score,
                                      train_test_split, validation_curve)
 from sklearn.preprocessing import StandardScaler
+import plotly.graph_objects as go
 
 RANDOM_STATE = 42
 np.random.seed(RANDOM_STATE)
@@ -90,13 +91,21 @@ def train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test):
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print(classification_report(y_test, y_pred))
 
-    # Confusion matrix & coefficients of the TUNED model
-    cm = confusion_matrix(y_test, y_pred)
-    ConfusionMatrixDisplay(cm, display_labels=["Not Survived", "Survived"]).plot(
-        cmap="Blues"
+    # Confusion matrix – Plotly version & coefficients of the TUNED model
+    
+    cm = confusion_matrix(y_test, best_lr.predict(X_test_scaled))
+    fig = go.Figure(data=go.Heatmap(
+        z=cm,
+        text=cm,
+        texttemplate='%{text}',
+        colorscale='Blues'
+    ))
+    fig.update_layout(
+        title='Confusion Matrix – Logistic Regression (hold-out test set)',
+        xaxis_title='Predicted',
+        yaxis_title='Actual'
     )
-    plt.title("Confusion Matrix - Logistic Regression (tuned)")
-    plt.savefig("outputs/confusion_lr.png", bbox_inches="tight")
+    fig.write_html('outputs/cm_lr_testset.html')
 
     coefficients = pd.Series(best_lr.coef_[0], index=X_train.columns).sort_values(
         ascending=False
@@ -146,6 +155,21 @@ def train_random_forest(X_train, y_train, X_val, X_test, y_val, y_test):
     print("\n=== Random Forest (tuned) ===")
     print("Accuracy:", accuracy_score(y_test, y_pred))
     print(classification_report(y_test, y_pred))
+
+    # 3. Confusion matrix – Plotly version
+    cm = confusion_matrix(y_test, y_pred)
+    fig = go.Figure(data=go.Heatmap(
+        z=cm,
+        text=cm,
+        texttemplate='%{text}',
+        colorscale='Blues'
+    ))
+    fig.update_layout(
+        title='Confusion Matrix – Random Forest (hold-out test set)',
+        xaxis_title='Predicted',
+        yaxis_title='Actual'
+    )
+    fig.write_html('outputs/cm_rf_testset.html')
 
     # 3. Feature importances of the tuned model
     feature_importances = pd.DataFrame(
