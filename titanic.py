@@ -64,8 +64,8 @@ def train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test):
 
     lr = LogisticRegression(max_iter=500, solver="liblinear")
     lr.fit(X_train_scaled, y_train)
-    print(f"Validation accuracy (Logistic): {lr.score(X_val_scaled, y_val):.3f}")
-    print(f"Hold-out test accuracy (Logistic): {lr.score(X_test_scaled, y_test):.3f}")
+    print(f"Validation accuracy (LR): {lr.score(X_val_scaled, y_val):.3f}")
+    print(f"Hold-out test accuracy (LR): {lr.score(X_test_scaled, y_test):.3f}")
     y_pred = lr.predict(X_test_scaled)
 
     print("=== Logistic Regression Evaluation ===")
@@ -150,8 +150,8 @@ def main():
     X_temp, X_test, y_temp, y_test = train_test_split(
         X,
         y,
-        test_size=0.15, 
-        random_state=RANDOM_STATE, 
+        test_size=0.15,
+        random_state=RANDOM_STATE,
         stratify=y
     )
     X_train, X_val, y_train, y_val = train_test_split(
@@ -169,8 +169,8 @@ def main():
     # ------------------------ 7️⃣ Compare LR Coefficients vs RF Importances ------------------------
     comparison = pd.DataFrame(
         {"LR Coefficients": lr.coef_[0], "RF Importances": rf.feature_importances_},
-        index=X_train.columns,
-    ).sort_values(by="RF Importances", ascending=False)
+        index=X_train.columns
+        ).sort_values(by="RF Importances", ascending=False)
 
     print("\n=== Comparison: Logistic Regression vs Random Forest ===")
     print(comparison.round(3))
