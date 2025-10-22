@@ -4,6 +4,7 @@
 [![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)](https://github.com/plsjustwork/titanic-survival-prediction/actions)
 
 Predict passenger survival with classical ML (Logistic Regression, Random-Forest, XGBoost) in a **fully-reproducible** pipeline powered by GitHub Actions, showcasing data preprocessing, model evaluation, and feature importance visualization.
+Full pipeline in `titanic.py`; plots & metrics auto-saved to `outputs/`.
 
 ---
 
@@ -97,31 +98,11 @@ Logistic Regression highlights that being female, paying a higher fare, and trav
 ```
 titanic-survival-prediction/
 │
-├── .dvc/
-│   ├── .gitignore
-│   └── config
-├── .github/
-│   ├── workflows/
-│   │    ├── ci.yml
-├── tests/
-│   ├── __pycache__
-│   │    ├── test_preprocessing.cpython-312-pytest-8.4.2.pyc
-│   └── test_preprocessing.py
-├── outputs/                     # Generated outputs
-│   ├── confusion_lr.png
-│   ├── rf_feature_importance.png 
-│   ├── shap_beeswarm.png
-│   ├── val_curve_depth.png
-│   ├── cm_lr_testset.html
-│   └── cm_rf_testset.html
-├── .dvcignore
-├── .gitignore
-├── requirements.txt
-├── setup.cfg
-├── test.csv
-├── train.csv                    # Original Titanic dataset
-├── titanic_survival.py          # Python script with preprocessing, modeling, and evaluation
-└── README.md
+├── train.csv, test.csv        # Kaggle data (DVC-tracked)
+├── titanic.py                 # end-to-end script (pipeline)
+├── outputs/                   # auto-generated plots + csv
+├── tests/                     # pytest suite
+└── requirements.txt
 ```
 ---
 
