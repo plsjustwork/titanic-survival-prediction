@@ -3,30 +3,21 @@
 ![CV](https://img.shields.io/badge/CV-0.845-blue.svg)
 [![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)](https://github.com/plsjustwork/titanic-survival-prediction/actions)
 
-Predict passenger survival with classical ML (Logistic Regression, Random-Forest, XGBoost) in a **fully-reproducible** pipeline powered by GitHub Actions, showcasing data preprocessing, model evaluation, and feature importance visualization.
-Full pipeline in `titanic.py`; plots & metrics auto-saved to `outputs/`.
+Predict passenger survival with classical ML (Logistic Regression, Random-Forest) in a fully-reproducible pipeline powered by GitHub Actions. Includes data preprocessing, model evaluation, hyperparameter tuning, cross-validation, feature importance, and SHAP explainability. All outputs are saved automatically in `outputs/`.
 
 ---
 
 ## 📊 Project Overview
 
-The goal is to build a predictive model to determine which passengers survived the Titanic disaster based on passenger features.  
-This project demonstrates:
+This project builds predictive models to determine Titanic passenger survival based on passenger features.
+Updates from previous version include:
 
-- Data loading, exploration, and cleaning
-- Handling missing values
-- Encoding categorical variables
-- Feature scaling for Logistic Regression
-- Train/test split with validation
-- Random Forest classifier for predictions
-- Model evaluation with:
-    - Accuracy
-    - Confusion Matrix
-    - Classification Report
-- SHAP values to explain feature importance
-- Plots saved automatically in outputs/ folder
-- Comparing model outputs and feature importance
+- Removal of outliers from numeric features
+- Hyperparameter tuning for Logistic Regression and Random Forest
 - Cross-validation for Random Forest
+- SHAP summary plots for feature importance
+- Validation curves for Random Forest depth
+- Comparison of LR coefficients vs RF importanc
   
 ---
 
@@ -100,7 +91,7 @@ titanic-survival-prediction/
 │
 ├── train.csv, test.csv        # Kaggle data (DVC-tracked)
 ├── titanic.py                 # end-to-end script (pipeline)
-├── outputs/                   # auto-generated plots + csv
+├── outputs/                   # auto-generated plots & metrics (created by script)
 ├── tests/                     # pytest suite
 └── requirements.txt
 ```
