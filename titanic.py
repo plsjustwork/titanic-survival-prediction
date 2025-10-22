@@ -168,12 +168,9 @@ def main():
 
     # ------------------------ 7️⃣ Compare LR Coefficients vs RF Importances ------------------------
     comparison = pd.DataFrame(
-        {
-            "LR Coefficients": lr.coef_[0],
-            "RF Importances": rf.feature_importances_,
-        },
-        index=X_train.columns,
-    ).sort_values(by="RF Importances", ascending=False)
+        {"LR Coefficients": lr.coef_[0], "RF Importances": rf.feature_importances_},
+        index=X_train.columns
+        ).sort_values(by="RF Importances", ascending=False)
 
     print("\n=== Comparison: Logistic Regression vs Random Forest ===")
     print(comparison.round(3))
@@ -181,6 +178,8 @@ def main():
     cv_score = cross_val_score(rf, X_train, y_train, cv=5).mean()
     print(f"Cross-Validation Accuracy (RF, train fold): {cv_score:.3f}")
 
+
 if __name__ == "__main__":
     main()
+
 # ========================== End of Project ==========================
