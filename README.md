@@ -138,7 +138,7 @@ pytest
 flake8
 ```
 ## 📌 Notes
-
+- Confusion matrices can be saved as images by modifying the script (currently saved as HTML).
 - The outputs/ folder ensures all plots and metrics are saved automatically
 - Removing outliers is optional; can experiment with different thresholds
 - Hyperparameter tuning and cross-validation can be modified for experimentation
