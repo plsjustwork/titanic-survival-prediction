@@ -16,13 +16,12 @@ from sklearn.model_selection import (GridSearchCV, cross_val_score,
                                      train_test_split, validation_curve)
 from sklearn.preprocessing import StandardScaler
 import plotly.graph_objects as go
-
+import warnings
 
 RANDOM_STATE = 42
 np.random.seed(RANDOM_STATE)
 TEST_SIZE = 0.15
 VAL_SIZE = 0.176 # 0.176 * 0.85 ≈ 0.15
-rng = np.random.default_rng(seed=42)
 # ------------------------ 1️⃣ Load & Explore Data ------------------------
 
 
@@ -226,9 +225,10 @@ def main():
     rf, feat_imp = train_random_forest(X_train, y_train, X_val, X_test, y_val, y_test)
 
     # SHAP visualization for Random Forest
+    warnings.simplefilter(action='ignore', category=FutureWarning)
     explainer = shap.TreeExplainer(rf)
     shap_values = explainer.shap_values(X_val)
-    shap.summary_plot(shap_values, X_val, show=False, rng=rng)
+    shap.summary_plot(shap_values, X_val, show=False)
     plt.savefig("outputs/shap_beeswarm.png", bbox_inches="tight")
     plt.close()
 
