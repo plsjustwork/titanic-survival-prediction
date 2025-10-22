@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import shap
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
@@ -198,6 +199,13 @@ def main():
 
     lr, coef = train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test)
     rf, feat_imp = train_random_forest(X_train, y_train, X_val, X_test, y_val, y_test)
+
+    # SHAP visualization for Random Forest
+    explainer = shap.TreeExplainer(rf)
+    shap_values = explainer.shap_values(X_val)
+    shap.summary_plot(shap_values, X_val, show=False)
+    plt.savefig("outputs/shap_beeswarm.png", bbox_inches="tight")
+    plt.close()
 
     # ------------------------ 7️⃣ Compare LR Coefficients vs RF Importances ------------------------
     comparison = pd.DataFrame(
