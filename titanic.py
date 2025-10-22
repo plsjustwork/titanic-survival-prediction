@@ -170,10 +170,7 @@ def main():
     comparison = pd.DataFrame(
         {"LR Coefficients": lr.coef_[0], "RF Importances": rf.feature_importances_},
         index=X_train.columns
-    ).sort_values(
-        by="RF Importances",
-        ascending=False
-    )
+    ).sort_values(by="RF Importances", ascending=False)
 
     print("\n=== Comparison: Logistic Regression vs Random Forest ===")
     print(comparison.round(3))
