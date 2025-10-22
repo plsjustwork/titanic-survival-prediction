@@ -136,8 +136,7 @@ def main():
     Q3 = X[num_cols].quantile(0.75)
     IQR = Q3 - Q1
 
-    outlier_condition = ((X[num_cols] < (Q1 - 1.5 * IQR)) |
-                     (X[num_cols] > (Q3 + 1.5 * IQR))).any(axis=1)
+    outlier_condition = ((X[num_cols] < (Q1 - 1.5 * IQR)) | (X[num_cols] > (Q3 + 1.5 * IQR))).any(axis=1)
     X_no_outliers = X[~outlier_condition]
     y_no_outliers = y.loc[X_no_outliers.index]
 
