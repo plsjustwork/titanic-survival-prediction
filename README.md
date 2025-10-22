@@ -81,21 +81,6 @@ Example outputs:
   
 ---
 
-## 🔍 Feature Importance
-
-### Logistic Regression Coefficients
-- Positive: increase survival chance  
-- Negative: decrease survival chance 
-- Top positive and negative features are printed in the console.
-
-### Random Forest Feature Importance
-
-![Random Forest Feature Importances](outputs/rf_feature_importance.png)
-
-- Shows the most and least influential features
-
----
-
 ## 📝 Conclusion
 - Logistic Regression confirms that being female, traveling in first class, and higher fare increase survival chance
 - Age, larger families, and being male reduce survival chance
