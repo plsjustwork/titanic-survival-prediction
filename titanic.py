@@ -10,7 +10,7 @@ import shap
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import (ConfusionMatrixDisplay, accuracy_score,
+from sklearn.metrics import (accuracy_score,
                              classification_report, confusion_matrix)
 from sklearn.model_selection import (GridSearchCV, cross_val_score,
                                      train_test_split, validation_curve)
@@ -92,7 +92,6 @@ def train_logistic_regression(X_train, y_train, X_val, X_test, y_val, y_test):
     print(classification_report(y_test, y_pred))
 
     # Confusion matrix – Plotly version & coefficients of the TUNED model
-    
     cm = confusion_matrix(y_test, best_lr.predict(X_test_scaled))
     fig = go.Figure(data=go.Heatmap(
         z=cm,
