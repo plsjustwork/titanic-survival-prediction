@@ -80,10 +80,12 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 - Confusion Matrix: true positives, false positives, etc.
 - Cross-Validation Score: for Random Forest
 Example outputs:
+
 | Model               | Validation Accuracy | Test Accuracy | CV Score (if applicable) |
 | ------------------- | ------------------- | ------------- | ------------------------ |
 | Logistic Regression | 0.851               | 0.770         | -                        |
 | Random Forest       | 0.851               | 0.793         | 0.814                    |
+
 - Confusion matrices and LR vs RF comparison printed in console
 - Cross-validation confirms Random Forest generalizes well
   
