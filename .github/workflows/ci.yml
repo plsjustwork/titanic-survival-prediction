@@ -1,4 +1,5 @@
 name: CI
+
 on: [push, pull_request]
 
 jobs:
@@ -6,22 +7,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repo
       - uses: actions/checkout@v4
 
-      # Step 2: Set up Python
       - uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      # Step 3: Upgrade pip
-      - run: python -m pip install --upgrade pip
+      - run: pip install --upgrade pip setuptools wheel
+      - run: pip install -r requirements.txt
 
-      # Step 4: Install requirements (skip optional Windows packages)
-      - run: |
-          pip install --upgrade pip setuptools wheel
-          pip install -r requirements.txt --no-deps || true
-          # install deps ignoring pywin32 on Linux
-          pip install $(grep -v "pywin32" requirements.txt)
       - run: pytest
       - run: flake8 .
