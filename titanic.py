@@ -21,7 +21,7 @@ import warnings
 RANDOM_STATE = 42
 np.random.seed(RANDOM_STATE)
 TEST_SIZE = 0.15
-VAL_SIZE = 0.176 # 0.176 * 0.85 ≈ 0.15
+VAL_SIZE = 0.176  # 0.176 * 0.85 ≈ 0.15
 # ------------------------ 1️⃣ Load & Explore Data ------------------------
 
 
