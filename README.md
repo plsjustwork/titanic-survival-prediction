@@ -6,22 +6,7 @@
 Predict passenger survival with classical ML (Logistic Regression, Random-Forest, XGBoost) in a **fully-reproducible** pipeline powered by GitHub Actions, showcasing data preprocessing, model evaluation, and feature importance visualization.
 
 ---
-```bash
-# 1. clone & enter
-git clone https://github.com/plsjustwork/titanic-survival-prediction.git
-cd titanic-survival-prediction
 
-# 2. create environment
-python -m venv .venv && source .venv/bin/activate  # Win: .venv\Scripts\activate
-pip install -r requirements.txt
-
-# 3. reproduce the entire pipeline
-dvc repro                 # pulls data, trains, evaluates, writes outputs/
-
-# 4. (optional) run tests & linting
-pytest
-flake8
-```
 ## 📊 Project Overview
 
 The goal is to build a predictive model to determine which passengers survived the Titanic disaster based on passenger features.  
@@ -31,8 +16,14 @@ This project demonstrates:
 - Handling missing values
 - Encoding categorical variables
 - Feature scaling for Logistic Regression
-- Model training and evaluation
-- Visualizing confusion matrices and feature importances
+- Train/test split with validation
+- Random Forest classifier for predictions
+- Model evaluation with:
+    - Accuracy
+    - Confusion Matrix
+    - Classification Report
+- SHAP values to explain feature importance
+- Plots saved automatically in outputs/ folder
 - Comparing model outputs and feature importance
 - Cross-validation for Random Forest
   
@@ -117,16 +108,25 @@ titanic-survival-prediction/
 
 ## 💻 How to Run
 
-1. Clone the repository by pasting this code in bash:
-  git clone https://github.com/yourusername/titanic-survival.git
-  cd titanic-survival
+```bash
+# 1. clone & enter
+git clone https://github.com/plsjustwork/titanic-survival-prediction.git
+cd titanic-survival-prediction
 
-2.Install dependencies needed to run this code by pasting this code in bash afterwards:
-  pip install pandas scikit-learn seaborn matplotlib
+# 2. create environment
+python -m venv .venv && source .venv/bin/activate  # Win: .venv\Scripts\activate
+pip install -r requirements.txt
 
-3.Run the script using the bash:
+# 3. reproduce the entire pipeline
+dvc repro                 # pulls data, trains, evaluates, writes outputs/
+
+4.Run the script using the bash:
   python titanic_survival.py
 
+# 4. (optional) run tests & linting
+pytest
+flake8
+```
 ## 📌 Notes
 
 - Random Forest cross-validation score is printed at the end of the script.
