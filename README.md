@@ -1,7 +1,6 @@
-![Python](https://img.shields.io/badge/python-3.12-blue)
 # Titanic Survival Prediction
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)]()
-[![Kaggle](https://img.shields.io/badge/Kaggle-0.813XX-green.svg)]()  <!-- TODO: put your PUBLIC LB score -->
+![Python](https://img.shields.io/badge/python-3.12-blue)
+[![Kaggle](https://img.shields.io/badge/Kaggle-0.813XX-green.svg)]()
 [![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)]()  <!-- TODO: delete line if no CI yet -->
 
 This project predicts passenger survival on the Titanic using **Logistic Regression** and **Random Forest Classifier**, showcasing data preprocessing, model evaluation, and feature importance visualization.
