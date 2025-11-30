@@ -2,22 +2,25 @@ import pandas as pd
 import sys
 from pathlib import Path
 
+# Ensure project root is in PYTHONPATH
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
-def test_no_missing_age_after_preprocess():
-    """Ensure no NaNs remain after preprocessing."""
-    sys.path.insert(0, str(Path(__file__).parent.parent))
-    from titanic import preprocess_data  # noqa: E402
+from src.functions.preprocessing import preprocess_df  # noqa: E402
 
-    raw = pd.read_csv("train.csv")
-    X, y = preprocess_data(raw)
-    assert X.isna().sum().sum() == 0, "Still contains NaNs"
+
+def test_no_missing_after_preprocess():
+    df = pd.read_csv(ROOT / "data" / "titanic.csv")
+
+    X, y = preprocess_df(df, remove_outliers=False)
+
+    assert X.isna().sum().sum() == 0, "Preprocessed features still contain NaNs"
+    assert y.isna().sum() == 0, "Target contains NaNs"
 
 
 def test_shape_consistency():
-    """Ensure X and y have matching lengths after preprocessing."""
-    sys.path.insert(0, str(Path(__file__).parent.parent))
-    from titanic import preprocess_data  # noqa: E402
+    df = pd.read_csv(ROOT / "data" / "titanic.csv")
 
-    raw = pd.read_csv("train.csv")
-    X, y = preprocess_data(raw)
-    assert len(X) == len(y), "X and y length mismatch"
+    X, y = preprocess_df(df, remove_outliers=False)
+
+    assert len(X) == len(y), f"Length mismatch: X={len(X)} vs y={len(y)}"
