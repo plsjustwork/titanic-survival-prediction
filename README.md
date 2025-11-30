@@ -4,21 +4,24 @@
 [![CI](https://github.com/plsjustwork/titanic-survival-prediction/workflows/CI/badge.svg)](https://github.com/plsjustwork/titanic-survival-prediction/actions)
 ![DVC](https://img.shields.io/badge/DVC-2.40+-blue)
 
-Predict passenger survival with classical ML (Logistic Regression, Random-Forest) in a fully-reproducible pipeline powered by GitHub Actions. Includes data preprocessing, model evaluation, hyperparameter tuning, cross-validation, feature importance, and SHAP explainability. All outputs are saved automatically in `outputs/`.
+Predict passenger survival using classical machine learning models (Logistic Regression & Random Forest) in a fully reproducible pipeline powered by GitHub Actions.
+Includes preprocessing, encoding, feature engineering, model training, evaluation, and automated output saving.
 
 ---
 
-## 📊 Project Overview
+## 📊 Project Overview & Goals
 
 This project builds predictive models to determine Titanic passenger survival based on passenger features.
 Updates from previous version include:
 
-- Removal of outliers from numeric features
-- Hyperparameter tuning for Logistic Regression and Random Forest
-- Cross-validation for Random Forest
-- SHAP summary plots for feature importance
-- Validation curves for Random Forest depth
-- Comparison of LR coefficients vs RF importance
+- Modular & scalable Python architecture
+- Clean preprocessing pipeline (encoding, scaling, missing values)
+- Optional outlier removal (applied only to training data)
+- Train/validation/test splitting
+- Model comparison with metrics & confusion matrices
+- Automated saving of all outputs in outputs/
+- GitHub Actions CI + DVC-ready workflow
+- Pytest test suite
   
 ---
 
@@ -30,117 +33,99 @@ The dataset comes from the [Kaggle Titanic competition](https://www.kaggle.com/c
 
 **Preprocessing steps:**
 
-- Dropped irrelevant columns: `Name`, `Ticket`, `Cabin`, `PassengerId`
-- Filled missing `Age` values with the median
-- Filled missing `Embarked` values with the mode (`S`)
-- Standardized features for Logistic Regression
-- Outliers removed based on IQR method
+- The preprocessing pipeline includes:
 
+  - Missing-value imputation
+  - Numeric scaling
+  - One-hot encoding of categorical features
+  - Optional outlier removal (done only on training set in main.py)
+    
 ---
 
 ## 🧠 Models Used
 
 ### Logistic Regression
 
-- Tuned with 5-fold GridSearchCV for C and penalty
-- Standardized features
+- Tuned via GridSearchCV (C, penalty)
+- Standardized feature inputs
 - Outputs:
-  - Validation accuracy: 0.851
-  - Test accuracy: 0.770
-  - Confusion matrix:Viewable through console
-  - Top positive coefficients: Sex (0.970), Fare (0.303)
-  - Top negative coefficients: Pclass (-0.143), Embarked_S (-0.089)
-
+  - Validation accuracy: 0.784
+  - Test accuracy: 0.754
+  - Confusion matrix:
+ 
+  ![Logistic Regression Confusion Matrix](outputs/logisticregression_cm.png)
+    
 ### Random Forest Classifier
 
 - Hyperparameter tuning via GridSearchCV
-- Validation curve for max_depth
- 
-![Random Forest Validation Curve](outputs/val_curve_depth.png)
-
-- Cross-validation score on training fold: 0.814
 - Outputs:
-  - Validation accuracy: 0.851
-  - Test accuracy: 0.793
-  - Confusion matrix:Viewable through console
-  - Feature importance
-     
-  ![Random Forest Feature Importances](outputs/rf_feature_importance.png)
-  
-  - Most important features: Sex, Fare, Age
-  
----
+  - Validation accuracy: 0.799
+  - Test accuracy: 0.761
+  - Confusion matrix:
 
-## 🔍 SHAP Explainability
-
-- TreeExplainer on Random Forest
-- SHAP summary plot:
-  
-![Random Forest SHAP Beeswarm](outputs/shap_beeswarm.png)
-
-- Shows feature-level impact on predictions
-- Confirms Sex and Fare as top contributors to survival prediction
-  
+  ![Random Forest Classifier Confusion Matrix](outputs/randomforest_cm.png)
 ---
 
 ## 📈 Evaluation Metrics
 
-- Accuracy: overall model performance
-- Classification Report: precision, recall, f1-score
-- Confusion Matrix: true positives, false positives, etc.
-- Cross-Validation Score: for Random Forest
-Example outputs:
+- Implemented in evaluation.py:
 
-| Model               | Validation Accuracy | Test Accuracy | CV Score (if applicable) |
-| ------------------- | ------------------- | ------------- | ------------------------ |
-| Logistic Regression | 0.851               | 0.770         | -                        |
-| Random Forest       | 0.851               | 0.793         | 0.814                    |
-
-- Confusion matrices and LR vs RF comparison printed in console
-- Cross-validation confirms Random Forest generalizes well
+  - Accuracy
+  - Classification report (precision, recall, F1)
+  - Confusion matrix (with heatmap plot saved to outputs/)
+  - Side-by-side model comparison table
+  - Feature importance (RF) + coefficients (LR) printed for interpretability
   
----
-
-## 📝 Conclusion
-- Logistic Regression confirms that being female, traveling in first class, and higher fare increase survival chance
-- Age, larger families, and being male reduce survival chance
-- Random Forest and SHAP plots provide consistent feature importance insights
-- Outlier removal and hyperparameter tuning improved model performance
-- Cross-validation shows RF is robust and avoids overfitting
-
 ## 📂 File Structure
 ```
 titanic-survival-prediction/
 │
-├── train.csv, test.csv        # Kaggle data (DVC-tracked)
-├── titanic.py                 # end-to-end script (pipeline)
-├── outputs/                   # auto-generated plots & metrics (created by script)
-├── tests/                     # pytest suite
+├── data/
+│   └── titanic.csv
+│
+├── src/
+│   ├── loader/
+│   │   └── load_data.py
+│   ├── functions/
+│   │   ├── models/
+│   │   │   ├── lr_model.py
+│   │   │   ├── rf_model.py
+│   │   │   └── evaluation.py
+│   │   ├── feature_engineering.py
+│   │   └── preprocessing.py
+│
+├── main.py              # full pipeline execution
+├── outputs/             # auto-generated metrics & plots 
+├── tests/               # pytest suite
 └── requirements.txt
+
 ```
 ---
 
 ## 💻 How to Run
 
 ```bash
-# 1. clone & enter
+# 1. clone repository
 git clone https://github.com/plsjustwork/titanic-survival-prediction.git
 cd titanic-survival-prediction
 
-# 2. create environment
-python -m venv .venv && source .venv/bin/activate  # Win: .venv\Scripts\activate
+# 2. create & activate environment
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+
+# 3. install dependencies
 pip install -r requirements.txt
 
-# 3.Run the script using the bash:
-python titanic.py
+# 4. run pipeline
+python main.py
 
-# 4. (optional) run tests & linting
+# 5. (optional) run tests & linting
 pytest
 flake8
+
 ```
 ## 📌 Notes
-- Confusion matrices can be saved as images by modifying the script (currently saved as HTML).
 - The outputs/ folder ensures all plots and metrics are saved automatically
 - Removing outliers is optional; can experiment with different thresholds
-- Hyperparameter tuning and cross-validation can be modified for experimentation
+- Hyperparameter tuning can be modified for experimentation and cross-validation could be added as well.
 - LR coefficients vs RF feature importance comparison printed in console for deeper analysis
