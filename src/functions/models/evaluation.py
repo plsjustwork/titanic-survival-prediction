@@ -1,13 +1,9 @@
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    confusion_matrix
-)
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+
 def plot_confusion_matrix(cm, title, output_path=None):
     """Plot and optionally save a confusion matrix."""
     plt.figure(figsize=(5, 4))
@@ -21,7 +17,10 @@ def plot_confusion_matrix(cm, title, output_path=None):
 
     plt.close()
 
-def evaluate_model(model, X_val, y_val, X_test, y_test,model_name="Model", save_plots=False):
+
+def evaluate_model(
+    model, X_val, y_val, X_test, y_test, model_name="Model", save_plots=False
+):
     """Evaluate any trained classifier (LR, RF, etc.)"""
     # -------------------- Validation evaluation --------------------
     val_pred = model.predict(X_val)
@@ -46,7 +45,7 @@ def evaluate_model(model, X_val, y_val, X_test, y_test,model_name="Model", save_
         plot_confusion_matrix(
             test_cm,
             title=f"{model_name} – Confusion Matrix (Test Set)",
-            output_path=f"outputs/{model_name.lower()}_cm.png"
+            output_path=f"outputs/{model_name.lower()}_cm.png",
         )
 
     # -------------------------- Return results -------------------------

@@ -13,12 +13,16 @@ def test_no_missing_after_preprocess():
     """Ensure no NaNs remain after preprocessing."""
     df = pd.read_csv(ROOT / "data" / "titanic.csv")
     processed = preprocess_df(df)
-    assert processed.isna().sum().sum() == 0, "Preprocessed dataframe still contains NaNs"
+    assert (
+        processed.isna().sum().sum() == 0
+    ), "Preprocessed dataframe still contains NaNs"
 
 
 def test_shape_consistency():
     """Ensure Survived column still matches dataframe rows."""
     df = pd.read_csv(ROOT / "data" / "titanic.csv")
     processed = preprocess_df(df)
-    assert "Survived" in processed.columns, "'Survived' column missing after preprocessing"
+    assert (
+        "Survived" in processed.columns
+    ), "'Survived' column missing after preprocessing"
     assert len(processed) == processed["Survived"].shape[0], "Row count mismatch"

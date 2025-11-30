@@ -4,7 +4,7 @@ import pandas as pd
 # ------------------------ 1️⃣ Load & Explore Data ------------------------
 
 
-def load_data(path:str):
+def load_data(path: str):
     if not os.path.exists(path):
         raise FileNotFoundError(f"File not found: {path}")
     return pd.read_csv(path)

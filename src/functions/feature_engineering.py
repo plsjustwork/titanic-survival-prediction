@@ -1,8 +1,9 @@
 import pandas as pd
 
+
 def feature_engineering(df):
     # Family size
-    df["FamilySize"] = df["SibSp"] + df["Parch"]+1
+    df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
     df["IsAlone"] = (df["FamilySize"] == 1).astype(int)
 
     # Ticket group size
@@ -13,6 +14,6 @@ def feature_engineering(df):
     df["FarePerPerson"] = df["Fare"] / df["TicketGroupSize"]
 
     # Age band
-    df["AgeBand"] = pd.cut(df["Age"], bins=[0,12,18,35,60,100], labels=False)
+    df["AgeBand"] = pd.cut(df["Age"], bins=[0, 12, 18, 35, 60, 100], labels=False)
 
     return df
