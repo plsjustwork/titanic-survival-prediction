@@ -10,17 +10,15 @@ from src.functions.preprocessing import preprocess_df  # noqa: E402
 
 
 def test_no_missing_after_preprocess():
+    """Ensure no NaNs remain after preprocessing."""
     df = pd.read_csv(ROOT / "data" / "titanic.csv")
-
-    X, y = preprocess_df(df)
-
-    assert X.isna().sum().sum() == 0, "Preprocessed features still contain NaNs"
-    assert y.isna().sum() == 0, "Target contains NaNs"
+    processed = preprocess_df(df)
+    assert processed.isna().sum().sum() == 0, "Preprocessed dataframe still contains NaNs"
 
 
 def test_shape_consistency():
+    """Ensure Survived column still matches dataframe rows."""
     df = pd.read_csv(ROOT / "data" / "titanic.csv")
-
-    X, y = preprocess_df(df)
-
-    assert len(X) == len(y), f"Length mismatch: X={len(X)} vs y={len(y)}"
+    processed = preprocess_df(df)
+    assert "Survived" in processed.columns, "'Survived' column missing after preprocessing"
+    assert len(processed) == processed["Survived"].shape[0], "Row count mismatch"

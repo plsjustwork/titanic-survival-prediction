@@ -30,4 +30,3 @@ def train_logistic_regression(X_train, y_train):
         "best_model": lr_grid.best_estimator_,
         "best_params": lr_grid.best_params_
     }
-
